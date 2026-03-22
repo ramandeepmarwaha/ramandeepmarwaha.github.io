@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ramandeep Marwaha — Senior Data Architect</title>
+  <meta name="description" content="Founder of R&R Consulting Ltd. Senior Data Architect specialising in capital markets data platforms, Collibra governance, Data Mesh, and GCP. Serving Tier 1 Canadian banks and government organisations since 2014." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Variables ─────────────────────────────────────────────── */
+    :root {
+      --navy:       #0d1b2e;
+      --navy-mid:   #152238;
+      --navy-light: #1e3352;
+      --blue:       #1a6b9a;
+      --blue-light: #2a8bc4;
+      --gold:       #c9a84c;
+      --gold-light: #e8c97a;
+      --white:      #f4f0eb;
+      --white-dim:  #c8c0b4;
+      --gray:       #8a8278;
+      --mono:       'JetBrains Mono', monospace;
+      --serif:      'Playfair Display', serif;
+      --sans:       'Lato', sans-serif;
+    }
+
+    /* ── Reset ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise texture overlay ─────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── Navigation ────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 4rem;
+      background: linear-gradient(to bottom, rgba(13,27,46,0.98), transparent);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--white-dim);
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── Hero ──────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 4rem;
+      overflow: hidden;
+    }
+
+    /* Geometric background lines */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -20%; right: -10%;
+      width: 70vw; height: 140vh;
+      background:
+        linear-gradient(135deg, transparent 40%, rgba(26,107,154,0.04) 40%, rgba(26,107,154,0.04) 41%, transparent 41%),
+        linear-gradient(135deg, transparent 55%, rgba(201,168,76,0.03) 55%, rgba(201,168,76,0.03) 56%, transparent 56%),
+        linear-gradient(135deg, transparent 70%, rgba(26,107,154,0.03) 70%, rgba(26,107,154,0.03) 71%, transparent 71%);
+      pointer-events: none;
+    }
+
+    /* Subtle grid */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(26,107,154,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,107,154,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.4s;
+    }
+
+    .hero-name span {
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-title {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--blue-light);
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.6s;
+    }
+
+    .hero-tagline {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: var(--white-dim);
+      line-height: 1.8;
+      max-width: 580px;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.8s;
+    }
+
+    .hero-tagline strong {
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    .hero-certs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1s;
+    }
+
+    .cert-badge {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.4);
+      padding: 0.3rem 0.8rem;
+      letter-spacing: 0.15em;
+      background: rgba(201,168,76,0.05);
+      transition: all 0.3s;
+    }
+
+    .cert-badge:hover {
+      background: rgba(201,168,76,0.12);
+      border-color: var(--gold);
+    }
+
+    .cert-badge.new {
+      color: var(--navy);
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1.2s;
+    }
+
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--gold);
+      border: none;
+      padding: 0.9rem 2rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      background: transparent;
+      border: 1px solid rgba(200,192,180,0.3);
+      padding: 0.9rem 2rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover {
+      color: var(--white);
+      border-color: rgba(200,192,180,0.7);
+      transform: translateY(-2px);
+    }
+
+    /* Hero stats bar */
+    .hero-stats {
+      position: absolute;
+      bottom: 3rem; right: 4rem;
+      display: flex;
+      gap: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1.4s;
+    }
+
+    .stat {
+      text-align: right;
+    }
+
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--gray);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* ── Section base ──────────────────────────────────────────── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 7rem 4rem;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--white-dim);
+      max-width: 560px;
+      margin-bottom: 4rem;
+    }
+
+    /* ── Divider ───────────────────────────────────────────────── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(26,107,154,0.3), transparent);
+      margin: 0;
+    }
+
+    /* ── About ─────────────────────────────────────────────────── */
+    #about {
+      background: var(--navy-mid);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 1rem;
+      color: var(--white-dim);
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text p strong {
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    .about-text p em {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    .about-right {}
+
+    .about-highlight {
+      border-left: 2px solid var(--gold);
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1.5rem;
+      background: rgba(201,168,76,0.04);
+    }
+
+    .about-highlight p {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--white);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .clients-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--gray);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .clients-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .client-tag {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--blue-light);
+      border: 1px solid rgba(42,139,196,0.3);
+      padding: 0.3rem 0.8rem;
+      background: rgba(42,139,196,0.05);
+      transition: all 0.3s;
+    }
+
+    .client-tag:hover {
+      background: rgba(42,139,196,0.12);
+      border-color: var(--blue-light);
+    }
+
+    /* ── Expertise ─────────────────────────────────────────────── */
+    #expertise {
+      background: var(--navy);
+    }
+
+    .expertise-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(26,107,154,0.15);
+      border: 1px solid rgba(26,107,154,0.15);
+    }
+
+    .expertise-card {
+      background: var(--navy);
+      padding: 2.5rem;
+      transition: background 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .expertise-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s;
+    }
+
+    .expertise-card:hover { background: var(--navy-light); }
+    .expertise-card:hover::before { transform: scaleX(1); }
+
+    .expertise-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .expertise-card h3 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+    }
+
+    .expertise-card p {
+      font-size: 0.88rem;
+      color: var(--white-dim);
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tech-tag {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--blue-light);
+      letter-spacing: 0.08em;
+      background: rgba(42,139,196,0.08);
+      padding: 0.2rem 0.5rem;
+      border: 1px solid rgba(42,139,196,0.2);
+    }
+
+    /* ── Experience timeline ───────────────────────────────────── */
+    #experience {
+      background: var(--navy-mid);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold), rgba(201,168,76,0.1));
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 0 0 3.5rem 3rem;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.6s ease;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -0.45rem;
+      top: 0.4rem;
+      width: 0.9rem;
+      height: 0.9rem;
+      background: var(--gold);
+      border: 2px solid var(--navy-mid);
+      border-radius: 50%;
+    }
+
+
+    .timeline-period {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-active-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      font-weight: 500;
+      color: var(--navy);
+      background: var(--gold);
+      padding: 0.15rem 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-role {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-company {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--blue-light);
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .timeline-desc {
+      font-size: 0.9rem;
+      color: var(--white-dim);
+      line-height: 1.8;
+      max-width: 680px;
+    }
+
+    /* ── Certifications ────────────────────────────────────────── */
+    #certifications {
+      background: var(--navy);
+    }
+
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .cert-card {
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 2rem;
+      background: rgba(201,168,76,0.02);
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .cert-card.featured {
+      border-color: rgba(201,168,76,0.5);
+      background: rgba(201,168,76,0.06);
+    }
+
+    .cert-card.featured::after {
+      content: 'NEW · 2026';
+      position: absolute;
+      top: 1rem; right: 1rem;
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      color: var(--navy);
+      background: var(--gold);
+      padding: 0.2rem 0.5rem;
+      letter-spacing: 0.15em;
+    }
+
+    .cert-card:hover {
+      border-color: rgba(201,168,76,0.4);
+      transform: translateY(-3px);
+    }
+
+    .cert-issuer {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--gray);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .cert-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.3;
+      margin-bottom: 0.3rem;
+    }
+
+    .cert-id {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+
+    /* In Progress */
+    .cert-card.progress {
+      border-style: dashed;
+      border-color: rgba(42,139,196,0.3);
+      background: rgba(42,139,196,0.02);
+    }
+
+    .cert-card.progress .cert-name { color: var(--white-dim); }
+    .cert-card.progress .cert-issuer { color: var(--blue-light); }
+
+    /* ── Portfolio ─────────────────────────────────────────────── */
+    #portfolio {
+      background: var(--navy-mid);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .portfolio-card {
+      background: var(--navy);
+      border: 1px solid rgba(26,107,154,0.2);
+      padding: 2.2rem;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: block;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--blue), var(--gold));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s;
+    }
+
+    .portfolio-card:hover {
+      border-color: rgba(26,107,154,0.5);
+      transform: translateY(-4px);
+    }
+
+    .portfolio-card:hover::after { transform: scaleX(1); }
+
+    .portfolio-num {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.8rem;
+    }
+
+    .portfolio-title {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+      line-height: 1.3;
+    }
+
+    .portfolio-desc {
+      font-size: 0.87rem;
+      color: var(--white-dim);
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+
+    .portfolio-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .stack-tag {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--blue-light);
+      background: rgba(42,139,196,0.08);
+      border: 1px solid rgba(42,139,196,0.2);
+      padding: 0.15rem 0.5rem;
+    }
+
+    /* ── Domain expertise ──────────────────────────────────────── */
+    #domain {
+      background: var(--navy);
+    }
+
+    .domain-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: rgba(26,107,154,0.1);
+    }
+
+    .domain-block {
+      background: var(--navy);
+      padding: 2.5rem;
+    }
+
+    .domain-block h3 {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    .domain-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .domain-item {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--white-dim);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 0.3rem 0.7rem;
+      transition: all 0.25s;
+    }
+
+    .domain-item:hover {
+      color: var(--white);
+      border-color: rgba(201,168,76,0.3);
+      background: rgba(201,168,76,0.05);
+    }
+
+    /* ── Contact ───────────────────────────────────────────────── */
+    #contact {
+      background: var(--navy-mid);
+      text-align: center;
+      padding: 8rem 4rem;
+    }
+
+    .contact-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      text-decoration: none;
+      border: 1px solid rgba(200,192,180,0.2);
+      padding: 0.8rem 1.8rem;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .contact-link:hover {
+      color: var(--gold);
+      border-color: rgba(201,168,76,0.5);
+      background: rgba(201,168,76,0.05);
+    }
+
+    /* ── Footer ────────────────────────────────────────────────── */
+    footer {
+      background: var(--navy);
+      border-top: 1px solid rgba(26,107,154,0.15);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--gray);
+      letter-spacing: 0.1em;
+    }
+
+    footer a {
+      color: var(--blue-light);
+      text-decoration: none;
+    }
+
+    /* ── Animations ────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+
+
+    /* ── Responsive ────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 2rem; }
+      .nav-links { display: none; }
+      section { padding: 5rem 2rem; }
+      .hero { padding: 0 2rem; }
+      .hero-stats { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .expertise-grid { grid-template-columns: repeat(2, 1fr); }
+      .certs-grid { grid-template-columns: 1fr 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .domain-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    @media (max-width: 600px) {
+      .certs-grid { grid-template-columns: 1fr; }
+      .hero-name { font-size: 2.5rem; }
+      .contact-links { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="nav-logo">R&R Consulting Ltd</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#expertise">Expertise</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#certifications">Credentials</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Founder · R&R Consulting Ltd · Est. 2014</p>
+      <h1 class="hero-name">
+        Ramandeep
+        <span>Marwaha</span>
+      </h1>
+      <p class="hero-title">Senior Data Architect &nbsp;·&nbsp; Collibra Certified Solution Architect &nbsp;·&nbsp; Toronto, Canada</p>
+      <p class="hero-tagline">
+        I build the <strong>data infrastructure</strong> that capital markets firms run on —
+        greenfield platforms, enterprise governance, Data Mesh strategy, and
+        <strong>AI-powered data tools</strong>
+        for <strong>Tier 1 Canadian banks</strong> and government organisations.
+      </p>
+      <div class="hero-certs">
+        <span class="cert-badge new">Collibra Solution Architect</span>
+        <span class="cert-badge">CDMP</span>
+        <span class="cert-badge">PMP</span>
+        <span class="cert-badge">CBAP</span>
+        <span class="cert-badge">CSM</span>
+        <span class="cert-badge">SFC</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#contact" class="btn-primary">Engage R&R Consulting</a>
+        <a href="#portfolio" class="btn-secondary">View Portfolio</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">18+</span>
+        <span class="stat-label">Years Experience</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">11</span>
+        <span class="stat-label">Years R&R Consulting</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">9+</span>
+        <span class="stat-label">Tier 1 Clients</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- About -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="section-label">About</p>
+        <h2 class="section-title">Platform Builder.<br/>Governance Architect.</h2>
+        <p>
+          I founded <em>R&R Consulting Ltd</em> in 2014 to bring senior data architecture expertise to organisations tackling complex, high-stakes data challenges. Over 11 years I have delivered engagements for Tier 1 Canadian banks, crown corporations, and government agencies.
+        </p>
+        <p>
+          My deepest work: architecting a <strong>greenfield capital markets data platform</strong> for one of Canada's largest banks — a production-grade streaming platform now governing data across derivatives, FX, equities, fixed income, and regulatory reporting.
+        </p>
+        <p>
+          I sit at the intersection of three disciplines most organisations struggle to combine: <strong>capital markets domain depth</strong>, <strong>modern platform architecture</strong>, and <strong>enterprise data governance</strong>. That combination is rare. That is why Tier 1 institutions call R&R Consulting.
+        </p>
+      </div>
+      <div class="about-right">
+        <div class="about-highlight">
+          <p>"The governance framework, CDE policies, and ASD standards I designed are still the backbone of a Tier 1 bank's GBM data platform — years after initial delivery."</p>
+        </div>
+        <p class="clients-label">Selected Clients</p>
+        <div class="clients-list">
+          <span class="client-tag">Scotiabank</span>
+          <span class="client-tag">National Bank</span>
+          <span class="client-tag">TD Securities</span>
+          <span class="client-tag">RBC Capital Markets</span>
+          <span class="client-tag">BCLC</span>
+          <span class="client-tag">CMHC</span>
+          <span class="client-tag">CIBC</span>
+          <span class="client-tag">Royal Bank of Scotland</span>
+          <span class="client-tag">State Street Bank</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Expertise -->
+  <section id="expertise">
+    <p class="section-label">Core Expertise</p>
+    <h2 class="section-title">What R&R Consulting Delivers</h2>
+    <p class="section-subtitle">Senior data architecture and AI engineering engagements across seven practice areas — each built on real production experience at Tier 1 institutions.</p>
+
+    <div class="expertise-grid">
+      <div class="expertise-card">
+        <span class="expertise-icon">⚡</span>
+        <h3>Streaming Data Platforms</h3>
+        <p>Greenfield and transformation engagements — designing real-time capital markets data platforms from architecture to production.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">Kafka</span>
+          <span class="tech-tag">GCP</span>
+          <span class="tech-tag">BigQuery</span>
+          <span class="tech-tag">Elasticsearch</span>
+          <span class="tech-tag">Avro</span>
+          <span class="tech-tag">Pub/Sub</span>
+          <span class="tech-tag">Dataflow</span>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <span class="expertise-icon">🏛</span>
+        <h3>Collibra Implementation</h3>
+        <p>Full lifecycle Collibra delivery — from POC and vendor selection through enterprise production, administration, workflow automation, and Edge integration.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">Collibra</span>
+          <span class="tech-tag">Workflow Designer</span>
+          <span class="tech-tag">REST APIs</span>
+          <span class="tech-tag">Edge</span>
+          <span class="tech-tag">Business Glossary</span>
+          <span class="tech-tag">Python</span>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <span class="expertise-icon">🤖</span>
+        <h3>AI-Powered Data Solutions</h3>
+        <p>Building practical AI tools on top of governed data platforms — RAG pipelines, local LLM deployments, and natural language interfaces for enterprise data assets.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">RAG</span>
+          <span class="tech-tag">Ollama</span>
+          <span class="tech-tag">ChromaDB</span>
+          <span class="tech-tag">Mistral</span>
+          <span class="tech-tag">LLaMA 3</span>
+          <span class="tech-tag">Vertex AI</span>
+          <span class="tech-tag">Streamlit</span>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <span class="expertise-icon">🕸</span>
+        <h3>Data Mesh & Data Products</h3>
+        <p>Designing federated governance frameworks, domain ownership models, and data product contracts for large financial institutions.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">Data Mesh</span>
+          <span class="tech-tag">Data Contracts</span>
+          <span class="tech-tag">Dataplex</span>
+          <span class="tech-tag">Federated Governance</span>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <span class="expertise-icon">🗂</span>
+        <h3>MDM & Client Data Strategy</h3>
+        <p>Enterprise MDM strategy, 360° client view design, and data mastering programme delivery across capital markets organisations.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">Tamr</span>
+          <span class="tech-tag">GoldenSource</span>
+          <span class="tech-tag">IBM MDM</span>
+          <span class="tech-tag">Snowflake</span>
+          <span class="tech-tag">Client Central</span>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <span class="expertise-icon">📐</span>
+        <h3>Capital Markets Data Modeling</h3>
+        <p>Physical and logical data modeling across 15+ asset classes using FpML, FIX, and Common Data Models — Elasticsearch, Avro, and relational.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">FpML</span>
+          <span class="tech-tag">FIX</span>
+          <span class="tech-tag">Avro</span>
+          <span class="tech-tag">ERwin</span>
+          <span class="tech-tag">Power Designer</span>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <span class="expertise-icon">⚖️</span>
+        <h3>Regulatory Data Architecture</h3>
+        <p>Data architecture for Basel III, CAT, BCBS239, ESG, T+1, and Initial Margin — bridging regulatory requirements and technical platform design.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">Basel III</span>
+          <span class="tech-tag">CAT</span>
+          <span class="tech-tag">BCBS239</span>
+          <span class="tech-tag">ESG</span>
+          <span class="tech-tag">T+1</span>
+          <span class="tech-tag">Initial Margin</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Experience -->
+  <section id="experience">
+    <p class="section-label">Experience</p>
+    <h2 class="section-title">18 Years. Nine Institutions.<br/>One Consistent Standard.</h2>
+    <p class="section-subtitle">Every engagement delivered through R&R Consulting Ltd since 2014.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-role">Senior Data Architect &mdash; GBM Capital Markets Data Platform</h3>
+        <p class="timeline-company">Scotiabank &middot; Global Banking &amp; Markets</p>
+        <p class="timeline-desc">Architected and delivered the Intake &amp; Governance framework for the GBM Data Platform across 10+ capital markets asset classes. Led Collibra administration, workflow development, and Edge integration. Spearheaded the Capital Markets Client Data Strategy and MDM programme. Contributed to Enterprise Liquidity Risk, T+1 Settlements, GCP Migration, and ESG Reporting initiatives.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-role">Sr. Collibra Architect &amp; Developer</h3>
+        <p class="timeline-company">BCLC &middot; British Columbia Lottery Corporation</p>
+        <p class="timeline-desc">Architected the enterprise Collibra operating model and self-serve governance framework. Designed automated workflows, built Power BI DQ reporting dashboards, integrated Collibra with Snowflake for metadata exchange and policy alignment, migrated legacy workflows to Collibra Workflow Developer, and delivered team training programmes.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-role">Senior Data Architect &mdash; Finance Domain Data Modelling</h3>
+        <p class="timeline-company">CMHC &middot; Canada Mortgage and Housing Corporation</p>
+        <p class="timeline-desc">Designed and delivered enterprise data models for the Finance domain across Azure Databricks and MySQL &mdash; spanning Appraisal, Lender, Fraud, Property, and Organisation subject areas. Modelled complex nested JSON data structures using ERwin, producing well-governed physical and logical schemas aligned to organisational data standards. Built an automation script that derived JSON schemas directly from the data dictionary &mdash; eliminating significant manual effort for the team and accelerating delivery of new data structures across the platform.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-role">Senior Data Architect &mdash; Strategic Operating Model Architecture</h3>
+        <p class="timeline-company">National Bank of Canada</p>
+        <p class="timeline-desc">Architected Wealth Management data models and governance migration to AWS. Designed data governance policies and automation solutions for the Common Data Model framework.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-role">Senior Data Architect &mdash; Greenfield Data Platform Build</h3>
+        <p class="timeline-company">Scotiabank &middot; Global Banking &amp; Markets</p>
+        <p class="timeline-desc">Built Scotiabank's GBM Data Platform from the ground up &mdash; establishing the foundational streaming architecture, Kafka topic naming conventions, data strategy, and governance framework. Led Collibra POC and full implementation. Designed data models for 15+ capital markets asset classes. Served as primary regulatory liaison for CAT compliance.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-role">Senior Data Architect &mdash; VaR Reporting &amp; Basel III</h3>
+        <p class="timeline-company">TD Securities</p>
+        <p class="timeline-desc">BCBS239 data aggregation requirements for Basel III RWA capital calculation. OTC Derivatives data integration across Darwin, Murex, and Calypso.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-role">Senior Business Consultant &mdash; Wholesale Credit Risk</h3>
+        <p class="timeline-company">RBC Capital Markets &middot; Group Risk Management</p>
+        <p class="timeline-desc">LGD Engine business rules for Basel III capital calculation across FX, Equities, and Derivatives. BSC and CMI policy authorship.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-role">Earlier Career</h3>
+        <p class="timeline-company">CIBC &middot; Royal Bank of Scotland (London) &middot; State Street Bank (Toronto &amp; Boston) &middot; Vocalink (London) &middot; UBS &middot; Level 3 Communications</p>
+        <p class="timeline-desc">Capital markets business analysis and data architecture across Basel II/III, derivatives valuation, payment processing, and data migration at global financial institutions.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Certifications -->
+  <section id="certifications">
+    <p class="section-label">Credentials</p>
+    <h2 class="section-title">Formally Verified.<br/>Practically Earned.</h2>
+    <p class="section-subtitle">Six professional certifications spanning data management, architecture, project delivery, and agile methodology.</p>
+
+    <div class="certs-grid">
+      <div class="cert-card featured">
+        <p class="cert-issuer">Collibra</p>
+        <p class="cert-name">Solution Architect — Implementation</p>
+        <p class="cert-id">Certificate No. C12135</p>
+      </div>
+      <div class="cert-card">
+        <p class="cert-issuer">DAMA International</p>
+        <p class="cert-name">Certified Data Management Professional</p>
+        <p class="cert-id">CDMP</p>
+      </div>
+      <div class="cert-card">
+        <p class="cert-issuer">PMI — Project Management Institute</p>
+        <p class="cert-name">Project Management Professional</p>
+        <p class="cert-id">PMP</p>
+      </div>
+      <div class="cert-card">
+        <p class="cert-issuer">IIBA Canada</p>
+        <p class="cert-name">Certified Business Analysis Professional</p>
+        <p class="cert-id">CBAP</p>
+      </div>
+      <div class="cert-card">
+        <p class="cert-issuer">Scrum Alliance</p>
+        <p class="cert-name">Certified Scrum Master</p>
+        <p class="cert-id">CSM</p>
+      </div>
+      <div class="cert-card">
+        <p class="cert-issuer">SCRUMstudy</p>
+        <p class="cert-name">Scrum Fundamentals Certified</p>
+        <p class="cert-id">SFC</p>
+      </div>
+      <div class="cert-card progress">
+        <p class="cert-issuer">Google Cloud · In Progress</p>
+        <p class="cert-name">Professional Data Engineer</p>
+        <p class="cert-id">GCP PDE</p>
+      </div>
+      <div class="cert-card progress">
+        <p class="cert-issuer">Databricks · In Progress</p>
+        <p class="cert-name">Data Engineer Associate</p>
+        <p class="cert-id">Databricks DE</p>
+      </div>
+      <div class="cert-card progress">
+        <p class="cert-issuer">Microsoft · In Progress</p>
+        <p class="cert-name">Azure Data Engineer Associate</p>
+        <p class="cert-id">DP-203</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Portfolio -->
+  <section id="portfolio">
+    <p class="section-label">Portfolio</p>
+    <h2 class="section-title">Open Source Work</h2>
+    <p class="section-subtitle">Production-grade projects demonstrating real patterns from Tier 1 financial institution data platforms — including AI-powered tools built for enterprise use.</p>
+
+    <div class="portfolio-grid">
+      <a href="https://github.com/ramandeepmarwaha/DataOracle" class="portfolio-card portfolio-featured" target="_blank" rel="noopener" style="grid-column: span 2; border-color: rgba(201,168,76,0.3); background: rgba(201,168,76,0.03);">
+        <p class="portfolio-num" style="color: var(--gold);">00 — AI Tool &nbsp;·&nbsp; Featured Project</p>
+        <h3 class="portfolio-title" style="font-size: 1.4rem;">DataOracle — Ask Your Documents Anything</h3>
+        <p class="portfolio-desc">A fully local RAG (Retrieval-Augmented Generation) pipeline that lets business users ask plain English questions about internal documents — schemas, policies, pipelines, data dictionaries, governance docs, runbooks, and KPIs. Supports PDF, Word, Excel, PowerPoint, CSV, JSON, and Markdown. Runs 100% locally — no cloud, no API keys, no data leaving your machine. Built for data teams at financial institutions who need AI-powered document intelligence without the security risk of sending data to external services.</p>
+        <p class="portfolio-desc" style="color: var(--white-dim); font-size: 0.82rem; margin-top: -0.5rem; margin-bottom: 1.2rem;">Ask questions like <em style="color: var(--gold);">"Which columns contain PII?"</em> or <em style="color: var(--gold);">"What should I do if nightly_aggregation fails?"</em> — and get grounded answers with source citations from your actual documents.</p>
+        <div class="portfolio-stack">
+          <span class="stack-tag">RAG Pipeline</span>
+          <span class="stack-tag">Ollama</span>
+          <span class="stack-tag">ChromaDB</span>
+          <span class="stack-tag">Mistral / LLaMA 3</span>
+          <span class="stack-tag">Sentence Transformers</span>
+          <span class="stack-tag">Streamlit</span>
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">100% Local</span>
+        </div>
+      </a>
+
+      <a href="https://github.com/ramandeepmarwaha/kafka-bigquery-capital-markets" class="portfolio-card" target="_blank" rel="noopener">
+        <p class="portfolio-num">01 — Streaming Pipeline</p>
+        <h3 class="portfolio-title">Kafka → BigQuery Capital Markets Pipeline</h3>
+        <p class="portfolio-desc">Production-grade streaming pipeline for equity and FX trade events — Avro serialisation, 15-rule DQ validation engine, batched BigQuery sink, DLQ routing, and optional Collibra lineage registration.</p>
+        <div class="portfolio-stack">
+          <span class="stack-tag">Kafka</span>
+          <span class="stack-tag">GCP</span>
+          <span class="stack-tag">BigQuery</span>
+          <span class="stack-tag">Avro</span>
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">Collibra API</span>
+        </div>
+      </a>
+      <a href="https://github.com/ramandeepmarwaha" class="portfolio-card" target="_blank" rel="noopener">
+        <p class="portfolio-num">02 — Governance Toolkit</p>
+        <h3 class="portfolio-title">Collibra Automation Toolkit</h3>
+        <p class="portfolio-desc">Enterprise Collibra automation — bulk asset management, automated CDE registration, BPMN workflow library, lineage ingestion, Snowflake integration, and DQ reporting via REST APIs.</p>
+        <div class="portfolio-stack">
+          <span class="stack-tag">Collibra</span>
+          <span class="stack-tag">REST APIs</span>
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">Snowflake</span>
+          <span class="stack-tag">Power BI</span>
+        </div>
+      </a>
+      <a href="https://github.com/ramandeepmarwaha" class="portfolio-card" target="_blank" rel="noopener">
+        <p class="portfolio-num">03 — Data Contracts</p>
+        <h3 class="portfolio-title">Capital Markets Data Contract Framework</h3>
+        <p class="portfolio-desc">YAML-based data contracts for capital markets asset classes with automated Soda Core validation, contract enforcement on Kafka topics, and Power BI contract health dashboards.</p>
+        <div class="portfolio-stack">
+          <span class="stack-tag">Data Contracts</span>
+          <span class="stack-tag">Soda Core</span>
+          <span class="stack-tag">YAML</span>
+          <span class="stack-tag">Kafka</span>
+          <span class="stack-tag">BigQuery</span>
+        </div>
+      </a>
+      <a href="https://github.com/ramandeepmarwaha" class="portfolio-card" target="_blank" rel="noopener">
+        <p class="portfolio-num">04 — Data Mesh</p>
+        <h3 class="portfolio-title">Financial Services Data Mesh Framework</h3>
+        <p class="portfolio-desc">Data product YAML specifications, domain ownership registry, federated governance policy templates, and self-serve catalog model adapted for capital markets organisations on GCP.</p>
+        <div class="portfolio-stack">
+          <span class="stack-tag">Data Mesh</span>
+          <span class="stack-tag">GCP</span>
+          <span class="stack-tag">Dataplex</span>
+          <span class="stack-tag">Collibra</span>
+          <span class="stack-tag">YAML</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Domain -->
+  <section id="domain">
+    <p class="section-label">Capital Markets Domain</p>
+    <h2 class="section-title">18 Years of Domain Depth</h2>
+    <p class="section-subtitle">The asset class, source system, and regulatory knowledge that takes a decade to build — and cannot be learned from a course.</p>
+
+    <div class="domain-grid">
+      <div class="domain-block">
+        <h3>Asset Classes</h3>
+        <div class="domain-items">
+          <span class="domain-item">FX Spot & Forward</span>
+          <span class="domain-item">Interest Rate Derivatives</span>
+          <span class="domain-item">Equity Options</span>
+          <span class="domain-item">Swaptions</span>
+          <span class="domain-item">Credit Default Swaps</span>
+          <span class="domain-item">Total Return Swaps</span>
+          <span class="domain-item">Fixed Income Futures</span>
+          <span class="domain-item">Commodities</span>
+          <span class="domain-item">Bonds & Loans</span>
+          <span class="domain-item">Vanilla & Exotic Derivatives</span>
+          <span class="domain-item">Market Data</span>
+          <span class="domain-item">Reference Data</span>
+        </div>
+      </div>
+      <div class="domain-block">
+        <h3>Source Systems</h3>
+        <div class="domain-items">
+          <span class="domain-item">Murex</span>
+          <span class="domain-item">Calypso</span>
+          <span class="domain-item">Ion</span>
+          <span class="domain-item">MMI</span>
+          <span class="domain-item">LoanIQ</span>
+          <span class="domain-item">SCOTS</span>
+          <span class="domain-item">Peak XV</span>
+          <span class="domain-item">Fidessa</span>
+          <span class="domain-item">Bloomberg</span>
+          <span class="domain-item">Thomson Reuters</span>
+          <span class="domain-item">Markit</span>
+          <span class="domain-item">WSSFX</span>
+        </div>
+      </div>
+      <div class="domain-block">
+        <h3>Regulatory Frameworks</h3>
+        <div class="domain-items">
+          <span class="domain-item">Basel III — RWA & Capital</span>
+          <span class="domain-item">BCBS239</span>
+          <span class="domain-item">CAT — Consolidated Audit Trail</span>
+          <span class="domain-item">FDSF</span>
+          <span class="domain-item">EWST</span>
+          <span class="domain-item">T+1 Settlement</span>
+          <span class="domain-item">Initial Margin</span>
+          <span class="domain-item">Trade Surveillance</span>
+          <span class="domain-item">ESG Reporting</span>
+          <span class="domain-item">Enterprise Liquidity Risk</span>
+        </div>
+      </div>
+      <div class="domain-block">
+        <h3>Standards & Protocols</h3>
+        <div class="domain-items">
+          <span class="domain-item">FpML</span>
+          <span class="domain-item">FIX Protocol</span>
+          <span class="domain-item">Apache Avro</span>
+          <span class="domain-item">ISO 6166 — ISIN</span>
+          <span class="domain-item">ISO 10383 — MIC</span>
+          <span class="domain-item">ISO 4217 — Currency</span>
+          <span class="domain-item">Common Data Model</span>
+          <span class="domain-item">DAMA DMBOK</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="contact-inner">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Open to Senior Engagements</h2>
+      <p style="color: var(--white-dim); font-size: 1rem; line-height: 1.8; margin-top: 1rem;">
+        R&R Consulting Ltd works with financial institutions and government organisations on data platform architecture, Collibra governance implementations, and Data Mesh strategy. If you have a complex data challenge — let's talk.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:ramandeepmarwaha@gmail.com" class="contact-link">
+          <span>✉</span> Email
+        </a>
+        <a href="https://www.linkedin.com/in/ramandeepmarwaha/" class="contact-link" target="_blank" rel="noopener">
+          <span>in</span> LinkedIn
+        </a>
+        <a href="https://github.com/ramandeepmarwaha" class="contact-link" target="_blank" rel="noopener">
+          <span>⌥</span> GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 R&R Consulting Ltd · Toronto, Canada</p>
+    <p>Ramandeep Marwaha · <a href="mailto:ramandeepmarwaha@gmail.com">ramandeepmarwaha@gmail.com</a></p>
+  </footer>
+
+  <!-- Scroll animation -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
