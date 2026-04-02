@@ -1375,31 +1375,21 @@
 
   <!-- Scroll animation -->
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-Observer({
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
       threshold: 0.1,
       rootMargin: '0px 0px -100px 0px'
     });
 
-    const animateElements = document.querySelectorAll('.expertise-card, .job-card, .cert-card, .portfolio-card, .domain-block');
+    const animateElements = document.querySelectorAll('.expertise-card, .timeline-item, .cert-card, .portfolio-card, .domain-block');
     animateElements.forEach(el => {
       observer.observe(el);
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(24px)';
     });
-
-    observer.observe = function(element) {
-      const callback = (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.animation = 'fadeUp 0.6s ease forwards';
-          }
-        });
-      };
-      new IntersectionObserver(callback, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-      }).observe(element);
-    };
 
     // Dynamic year calculation
     function calculateYears() {
